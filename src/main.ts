@@ -14,10 +14,10 @@ function updateHUD(level: number, score: number, lives: number) {
 
 (async function bootstrap(){
   const levels = await loadJSON<LevelConfig[]>("./public/levels.json");
+  const levelsCopy = [...levels]; // Faut juste que je cale un spread quelque part :)
   const cfg: GameConfig = { canvas, ctx, tile: 32, laneHeight: 80 };
   const game = new Game(cfg, levels, updateHUD);
 
-  // Démo .call : changer dynamiquement le titre via un contexte personnalisé
   callWith({ title: "🐔 La Poule qui Traverse" }, function() {
     document.title = (this as any).title;
   });

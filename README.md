@@ -1,5 +1,5 @@
 # 🐔 La Poule qui Traverse — Projet JS/TS
-Jeu simple où une poule traverse des voies avec des voitures. Clavier pour bouger.
+Jeu simple où une poule traverse des voies avec des voitures. Flèches du clavier pour bouger.
 
 ## Lancer
 ```bash
