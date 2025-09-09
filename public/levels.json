@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "lanes": 5,
+    "speed": 2.0,
+    "carsPerLane": 2
+  },
+  {
+    "id": 2,
+    "lanes": 6,
+    "speed": 2.8,
+    "carsPerLane": 3
+  },
+  {
+    "id": 3,
+    "lanes": 7,
+    "speed": 3.6,
+    "carsPerLane": 3
+  },
+  {
+    "id": 4,
+    "lanes": 8,
+    "speed": 4.4,
+    "carsPerLane": 4
+  }
+]

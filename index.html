@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Poule qui Traverse</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="bar">
+        <h1>🐔 La Poule qui Traverse</h1>
+        <div id="hud">
+          <span id="level">Niveau : 1</span>
+          <span id="score">Score : 0</span>
+          <span id="lives">Vies : 3</span>
+        </div>
+        <button id="start">Démarrer</button>
+      </header>
+      <canvas id="game" width="480" height="440" aria-label="Jeu de traversée"></canvas>
+      <footer class="bar small">
+        <p>Flèches ← → ↑ ↓. Espace = pause.</p>
+      </footer>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

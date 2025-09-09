@@ -1,0 +1,10 @@
+:root { --bg:#0f172a; --fg:#e2e8f0; --accent:#22d3ee; --danger:#ef4444; --ok:#22c55e; }
+* { box-sizing: border-box; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; }
+body { margin:0; background:var(--bg); color:var(--fg); display:grid; place-items:center; min-height:100vh; }
+.wrap { width:min(520px, 96vw); }
+.bar { display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:12px 8px; }
+.bar.small { opacity:.8; font-size:.9rem; }
+#hud { display:flex; gap:12px; }
+#start { background:var(--accent); border:0; padding:.5rem .9rem; color:#001015; border-radius:.5rem; cursor:pointer; font-weight:600; }
+#start:active { transform: translateY(1px); }
+#game { width:100%; background:linear-gradient(#1e293b 50%, #0b1220 50%); background-size:100% 80px; border:2px solid #1f2937; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,.35); image-rendering: pixelated; }
