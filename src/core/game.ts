@@ -1,3 +1,4 @@
+// importation helpers, types et state
 import { clamp, rand } from "../utils/index";
 import type { Player, Car, LevelConfig, GameConfig } from "./types";
 import { createScoreCounter, type RuntimeState } from "./state";
@@ -13,7 +14,7 @@ export class Game {
   running = false;
   updateHUD: (level: number, score: number, lives: number) => void;
   state: RuntimeState = { levelIndex: 0, paused: false, lives: 3 };
-  score = createScoreCounter(0); // closure
+  score = createScoreCounter(0); 
 
   constructor(cfg: GameConfig, levels: LevelConfig[], updateHUD: Game["updateHUD"]) {
     this.cfg = cfg;
@@ -21,13 +22,14 @@ export class Game {
     this.level = this.levels[0];
     this.updateHUD = updateHUD;
     const { canvas } = cfg;
+    //position de départ du joueur
     this.player = { x: canvas.width/2, y: canvas.height - cfg.laneHeight/2, size: 20, speed: 4, alive: true };
-    this.spawnLevel();
-    this.bindInputs();
-    // bind() explicite pour la boucle de jeu (manipulation de `this`)
-    this.loop = this.loop.bind(this);
+    this.spawnLevel(); // Genere le niveau
+    this.bindInputs(); // Ecoute le clavier
+    this.loop = this.loop.bind(this); 
   }
 
+  // config des touches
   bindInputs() {
     addEventListener("keydown", e => {
       if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault();
@@ -37,6 +39,7 @@ export class Game {
     addEventListener("keyup", e => this.keys.delete(e.key));
   }
 
+  // Genere les voitures
   spawnLevel() {
     const { laneHeight, canvas } = this.cfg;
     this.cars = [];
@@ -55,6 +58,7 @@ export class Game {
     this.player.y = canvas.height - laneHeight/2;
   }
 
+  // lance le jeu et la boucle d'animation
   start() {
     this.running = true;
     this.last = performance.now();
@@ -62,6 +66,7 @@ export class Game {
   }
   stop() { this.running = false; }
 
+  // boucle principale
   loop(t: number) {
     if (!this.running) return;
     const dt = Math.min(32, t - this.last) / 16.666;
@@ -71,6 +76,7 @@ export class Game {
     requestAnimationFrame(this.loop);
   }
 
+  // logique de jeu (déplacement, collisions, score, niveaux)
   update(dt: number) {
     const { canvas, laneHeight } = this.cfg;
     const p = this.player;
@@ -103,6 +109,7 @@ export class Game {
     this.updateHUD(this.level.id, this.score.get(), this.state.lives);
   }
 
+  // quand le joueur touche voiture
   hit() {
     this.state.lives -= 1;
     this.flash(180);
@@ -114,6 +121,7 @@ export class Game {
     }
   }
 
+  // niveau suivant
   nextLevel() {
     this.state.lives = Math.min(5, this.state.lives + 1);
     this.state.levelIndex = (this.state.levelIndex + 1) % this.levels.length;
@@ -121,6 +129,7 @@ export class Game {
     this.spawnLevel();
   }
 
+  // reset du jeu
   gameOver() {
     this.state.lives = 3;
     this.score.reset();
@@ -129,35 +138,37 @@ export class Game {
     this.spawnLevel();
   }
 
+  // interface de jeu
   draw() {
     const { ctx, canvas, laneHeight } = this.cfg;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // dessine la route
     for (let i = 0; i < Math.ceil(canvas.height / laneHeight); i++) {
       ctx.fillStyle = i % 2 === 0 ? "#0f172a" : "#0b1220";
       ctx.fillRect(0, canvas.height - (i+1)*laneHeight, canvas.width, laneHeight);
     }
-
+    // lignes des voies
     ctx.strokeStyle = "rgba(255,255,255,.15)";
     ctx.lineWidth = 2;
     for (let i = 1; i < this.level.lanes + 1; i++) {
       const y = canvas.height - i * laneHeight;
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
     }
-
+    // ligne du milieu
     for (const c of this.cars) {
       ctx.fillStyle = c.color || "#94a3b8";
       ctx.fillRect(c.x - c.w/2, c.y - c.h/2, c.w, c.h);
       ctx.fillStyle = "rgba(255,255,255,.35)";
       ctx.fillRect(c.dir===1 ? c.x + c.w/2 - 6 : c.x - c.w/2, c.y - 6, 6, 12);
     }
-
+    // dessine le joueur
     const p = this.player;
     ctx.fillStyle = "#fde68a";
     ctx.beginPath(); ctx.arc(p.x, p.y, p.size/1.4, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = "#f97316";
     ctx.beginPath(); ctx.moveTo(p.x + 6, p.y); ctx.lineTo(p.x + 16, p.y - 4); ctx.lineTo(p.x + 16, p.y + 4); ctx.closePath(); ctx.fill();
-
+    // mode pause
     if (this.state.paused) {
       ctx.fillStyle = "rgba(0,0,0,.4)";
       ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -168,6 +179,7 @@ export class Game {
     }
   }
 
+  // flash rouge quand on meurt
   flash(ms: number) {
     const { ctx, canvas } = this.cfg;
     const start = performance.now();
