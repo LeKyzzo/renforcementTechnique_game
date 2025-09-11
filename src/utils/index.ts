@@ -7,7 +7,7 @@ export const wait = (ms: number) => new Promise<void>(res => setTimeout(res, ms)
 //Charger le fichier JSON avec gestion du timeout et des erreurs
 export async function loadJSON<T>(url: string, timeoutMs = 3000): Promise<T> {
   const controller = new AbortController();
-  const timeout = wait(timeoutMs).then(() => controller.abort());// annule la requete si elle depasse le timeout
+  const timeout = wait(timeoutMs).then(() => controller.abort());// annule la requete si elle depasse le timeout.
   try {
     const fetchP = fetch(url, { signal: controller.signal }).then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);

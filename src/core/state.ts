@@ -1,3 +1,5 @@
+// gestion du jeu (score, niveau, vies, pause)
+
 export function createScoreCounter(initial = 0) {
   let score = initial;
   return {

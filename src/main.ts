@@ -12,13 +12,15 @@ function updateHUD(level: number, score: number, lives: number) {
   HUD.lives.textContent = `Vies : ${lives}`;
 }
 
+// Initialisation du jeu
 (async function bootstrap(){
   const levels = await loadJSON<LevelConfig[]>("./public/levels.json");
   const levelsCopy = [...levels]; // Faut juste que je cale un spread quelque part :)
   const cfg: GameConfig = { canvas, ctx, tile: 32, laneHeight: 80 };
-  const game = new Game(cfg, levels, updateHUD);
+  const game = new Game(cfg, levelsCopy, updateHUD);
 
-  callWith({ title: "🐔 La Poule qui Traverse" }, function() {
+  // change le titre de la page avec le contexte
+  callWith({ title: "🐔 La Poule qui est entrain de traverser" }, function() { 
     document.title = (this as any).title;
   });
 
