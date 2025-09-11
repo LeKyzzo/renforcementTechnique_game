@@ -17,3 +17,6 @@ npm run dev
 - **Asynchronisme** : chargement `levels.json` avec `async/await`, `try/catch`, `Promise.race` + abort.
 - **TypeScript** : plusieurs **interfaces** (`Player`, `Car`, `LevelConfig`, `GameConfig`), **union type** (`1 | -1`), **optional chaining** dans la gestion d'erreurs.
 - **Architecture** : séparation `src/core/` (mécanique), `src/utils/` (helpers), `src/main.ts` (bootstrap), `public/` (données).
+
+## GITHUB
+https://github.com/LeKyzzo/renforcementTechnique_game
